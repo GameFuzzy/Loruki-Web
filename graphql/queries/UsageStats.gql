@@ -1,0 +1,7 @@
+query LastUsageStats {
+  findFirstUsageStats(orderBy: {id: desc}) {
+    deployments
+    published
+    projects
+  }
+}

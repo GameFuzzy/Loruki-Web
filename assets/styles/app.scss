@@ -1,0 +1,167 @@
+:root {
+  --clr-dark-100: #333;
+  --clr-dark-300: #b4becb;
+  --clr-secondary-100: #047aed;
+  --clr-secondary-300: #5597e7;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  font-family: 'Lato', sans-serif;
+  color: var(--clr-dark-100);
+  line-height: 1.6;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2 {
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 10px 0;
+}
+
+p {
+  margin: 10px 0;
+}
+
+img {
+  width: 100%;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar {
+  background-color: var(--clr-secondary-100);
+  color: #fff;
+  height: 70px;
+
+  .flex {
+    justify-content: space-between;
+  }
+
+  ul {
+    display: flex;
+  }
+
+  a {
+    color: #fff;
+    padding: .625em;
+    margin: 0 .3125rem;
+    &.nuxt-link-exact-active {
+      color: #333;
+    }
+    &:hover {
+      border-bottom: 2px white solid;
+    }
+  }
+}
+
+.showcase {
+  height: 400px;
+  background-color: var(--clr-secondary-100);
+  color: #fff;
+  position: relative;
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    margin: 1.25rem 0;
+  }
+
+  .grid {
+    grid-template-columns: 45% 55%;
+    overflow: visible;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    height: 100px;
+    bottom: -70px;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+    transform: skewY(-3deg);
+  }
+
+  &-form {
+    position: relative;
+    top: 3.75rem;
+    height: 350px;
+    width: 400px;
+    padding: 2.5em;
+    z-index: 100;
+    justify-self: flex-end;
+
+    .form-control {
+      margin: 1.875rem 0;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='password']
+    {
+      border: 0;
+      border-bottom: 1px solid var(--clr-dark-300);
+      width: 100%;
+      padding: 3px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: var(--clr-dark-100);
+      }
+
+    }
+  }
+}
+
+.stats {
+  padding-top: 100px;
+
+  &-heading {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  .grid {
+    h3 {
+      font-size: 2.1875rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+  }
+
+}
+
+.cli {
+  .grid {
+    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+
+    & > *:first-child {
+      grid-column: 1 / span 2;
+      grid-row: 1 / span 2;
+    }
+
+  }
+
+}

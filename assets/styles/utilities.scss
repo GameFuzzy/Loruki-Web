@@ -1,0 +1,158 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 0 40px;
+}
+
+.card {
+  background-color: #fff;
+  color: var(--clr-dark-100);
+  border-radius: .625em;
+  box-shadow: 0 3px 10px rgba(0 0 0 / .2);
+  padding: 1.25em;
+  margin: .625em;
+
+  &.terminal {
+    background-color: var(--clr-dark-100);
+    color: #fff;
+  }
+
+}
+
+.btn {
+  display: inline-block;
+  padding: .625em 1.875em;
+  cursor: pointer;
+  background: var(--clr-secondary-100);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+
+  &:hover,
+  &:focus {
+    background-color: var(--clr-secondary-300);
+    transition: background-color 100ms ease-in-out;
+  }
+
+  &-outline {
+    background-color: transparent;
+    border: 1px solid #fff;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Margin */
+
+.my {
+  &-1 {
+    margin: 1rem 0;
+  }
+
+  &-2 {
+    margin: 1.5rem 0;
+  }
+
+  &-3 {
+    margin: 2rem 0;
+  }
+
+  &-4 {
+    margin: 3rem 0;
+  }
+
+  &-5 {
+    margin: 4rem 0;
+  }
+}
+
+.m {
+  &-1 {
+    margin: 1rem;
+  }
+
+  &-2 {
+    margin: 1.5rem;
+  }
+
+  &-3 {
+    margin: 2rem;
+  }
+
+  &-4 {
+    margin: 3rem;
+  }
+
+  &-5 {
+    margin: 4rem;
+  }
+}
+
+/* Padding */
+
+.py {
+  &-1 {
+    padding: 1rem 0;
+  }
+
+  &-2 {
+    padding: 1.5rem 0;
+  }
+
+  &-3 {
+    padding: 2rem 0;
+  }
+
+  &-4 {
+    padding: 3rem 0;
+  }
+
+  &-5 {
+    padding: 4rem 0;
+  }
+}
+
+.p {
+  &-1 {
+    padding: 1rem;
+  }
+
+  &-2 {
+    padding: 1.5rem;
+  }
+
+  &-3 {
+    padding: 2rem;
+  }
+
+  &-4 {
+    padding: 3rem;
+  }
+
+  &-5 {
+    padding: 4rem;
+  }
+}

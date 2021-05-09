@@ -1,0 +1,15 @@
+overwrite: true
+schema: http://localhost:4000/graphql
+documents: ./graphql/**/*.gql
+generates:
+  generated/gql.d.ts:
+    plugins:
+      - typescript-graphql-files-modules
+  generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-vue-apollo
+    config:
+      withCompositionFunctions: true
+      vueApolloComposableImportFrom: "@vue/apollo-composable/dist"

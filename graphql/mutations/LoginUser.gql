@@ -1,0 +1,5 @@
+mutation LoginUser($options: UserInput!) {
+  loginUser(data: $options) {
+    accessToken
+  }
+}
