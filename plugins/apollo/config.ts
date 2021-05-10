@@ -5,8 +5,9 @@ import { onError } from 'apollo-link-error'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { TokenRefreshLink } from 'apollo-link-token-refresh'
 import jwtDecode, { JwtPayload } from 'jwt-decode'
+import backendPathBuilder from '~/utilities/backendURIBuilder'
 
-export default (context: any) => {
+export default () => {
   const cache = new InMemoryCache({})
 
   const requestLink = new ApolloLink(
@@ -40,7 +41,7 @@ export default (context: any) => {
   )
 
   return {
-    httpEndpoint: 'http://localhost:4000/graphql',
+    httpEndpoint: backendPathBuilder(),
     defaultHttpLink: false,
     link: ApolloLink.from([
       // @ts-ignore
@@ -65,7 +66,7 @@ export default (context: any) => {
           }
         },
         fetchAccessToken: () => {
-          return fetch('http://localhost:4000/refresh_token', {
+          return fetch(`${backendPathBuilder(false)}/refresh_token`, {
             method: 'POST',
             credentials: 'include'
           })
@@ -84,7 +85,7 @@ export default (context: any) => {
       }),
       requestLink,
       new HttpLink({
-        uri: 'http://localhost:4000/graphql',
+        uri: backendPathBuilder(),
         credentials: 'include'
       })
     ]),

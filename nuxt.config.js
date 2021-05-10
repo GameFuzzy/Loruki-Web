@@ -34,6 +34,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@nuxtjs/dotenv',
     // GraphQl Apollo Client
     '@nuxtjs/apollo',
     '@nuxtjs/composition-api/module'

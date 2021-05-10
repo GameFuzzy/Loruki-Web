@@ -5,8 +5,8 @@ export default {
   mounted() {
     const req = http.request(
       {
-        hostname: 'localhost',
-        port: 4000,
+        hostname: process.env.BACKEND_HOSTNAME,
+        port: process.env.BACKEND_PORT,
         path: '/refresh_token',
         method: 'POST'
       },

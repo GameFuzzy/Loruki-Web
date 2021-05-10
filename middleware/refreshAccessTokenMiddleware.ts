@@ -1,10 +1,11 @@
 import { setAccessToken } from '~/auth'
+import backendPathBuilder from '~/utilities/backendURIBuilder'
 
 export default function (context: any) {
   return new Promise((resolve) => {
     context.$http
       .$post(
-        'http://localhost:4000/refresh_token',
+        `${backendPathBuilder(false)}/refresh_token`,
         {},
         { withCredentials: true }
       )

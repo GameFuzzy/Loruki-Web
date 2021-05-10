@@ -34,6 +34,7 @@
     "@graphql-codegen/typescript-vue-apollo": "^2.3.4",
     "@nuxt/types": "^2.15.3",
     "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@types/jwt-decode": "^3.1.0",
