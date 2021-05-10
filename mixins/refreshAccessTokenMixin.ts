@@ -1,27 +1,16 @@
-import http from 'http'
 import { setAccessToken } from '~/auth'
+import backendPathBuilder from '~/utilities/backendURIBuilder'
 
 export default {
   mounted() {
-    const req = http.request(
-      {
-        hostname: process.env.BACKEND_HOSTNAME,
-        port: process.env.BACKEND_PORT,
-        path: '/refresh_token',
-        method: 'POST'
-      },
-      () => {}
-    )
-
-    req.on('data', (data) => {
-      setAccessToken(data.accessToken)
-    })
-
-    req.on('error', (error) => {
-      console.error(error)
-    })
-
-    req.write('')
-    req.end()
+    this.$http
+      .$post(
+        `${backendPathBuilder(false)}/refresh_token`,
+        {},
+        { withCredentials: true }
+      )
+      .then((x: any) => {
+        setAccessToken(x.accessToken)
+      })
   }
 }
