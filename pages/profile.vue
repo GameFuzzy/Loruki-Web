@@ -2,7 +2,7 @@
   <div id="Bye">
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
-    <div v-else>{{ bye }}</div>
+    <div v-else>{{ profile }}</div>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default defineComponent({
     const { result, loading, error } = useByeQuery({
       fetchPolicy: 'network-only'
     })
-    const bye = useResult(result, null, (data) => data.bye)
+    const profile = useResult(result, null, (data) => data.bye)
 
     return { profile, loading, error }
   }

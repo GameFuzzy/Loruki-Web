@@ -294,6 +294,10 @@ export type LoginUserMutation = (
   & { loginUser: (
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username'>
+    ) }
   ) }
 );
 
@@ -359,6 +363,10 @@ export const LoginUserDocument = gql`
     mutation LoginUser($options: UserInput!) {
   loginUser(data: $options) {
     accessToken
+    user {
+      id
+      username
+    }
   }
 }
     `;

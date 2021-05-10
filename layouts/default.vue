@@ -37,6 +37,7 @@ export default {
   apollo: {
     me: {
       prefetch: false,
+      fetchPolicy: 'network-only',
       query: meQuery
     }
   },

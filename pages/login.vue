@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, ssrRef, useRouter } from '@nuxtjs/composition-api'
-import { useLoginUserMutation } from '~/generated/graphql'
+import { useLoginUserMutation, MeDocument } from '~/generated/graphql'
 import { setAccessToken } from '~/auth'
 
 export default defineComponent({
@@ -46,7 +46,19 @@ export default defineComponent({
     const username = ssrRef('')
     const password = ssrRef('')
 
-    const { mutate } = useLoginUserMutation({})
+    const { mutate } = useLoginUserMutation({
+      update: (store, { data }) => {
+        if (!data) {
+          return null
+        }
+        store.writeQuery({
+          query: MeDocument,
+          data: {
+            me: data.loginUser.user
+          }
+        })
+      }
+    })
 
     const login = async (e: any) => {
       e.preventDefault()

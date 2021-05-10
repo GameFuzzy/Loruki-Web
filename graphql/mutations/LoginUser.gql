@@ -1,5 +1,9 @@
 mutation LoginUser($options: UserInput!) {
   loginUser(data: $options) {
     accessToken
+    user {
+      id
+      username
+    }
   }
 }
