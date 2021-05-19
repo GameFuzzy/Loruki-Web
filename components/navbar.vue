@@ -17,7 +17,7 @@
             <button @click="logout">Logout</button>
           </li>
           <li v-if="!me">
-            <nuxt-link to="/login">Sign in {{ me }}</nuxt-link>
+            <nuxt-link to="/login">Sign in</nuxt-link>
           </li>
           <li v-if="!me">
             <nuxt-link to="/register">Register</nuxt-link>
