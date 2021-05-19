@@ -36,27 +36,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ssrRef, useRouter } from '@nuxtjs/composition-api'
-import { useRegisterUserMutation } from '~/generated/graphql'
+import {
+  defineComponent,
+  ssrRef,
+  useRouter,
+  useStore
+} from '@nuxtjs/composition-api'
+import { MeDocument, useRegisterUserMutation } from '~/generated/graphql'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
     const router = useRouter()
     const username = ssrRef('')
     const password = ssrRef('')
 
-    const { mutate } = useRegisterUserMutation({})
+    const { mutate } = useRegisterUserMutation({
+      update: (store, { data }) => {
+        if (!data) {
+          return null
+        }
+        store.writeQuery({
+          query: MeDocument,
+          data: {
+            me: data.registerUser.user
+          }
+        })
+      }
+    })
 
     const register = async (e: any) => {
       e.preventDefault()
+      try {
+        const response = await mutate({
+          options: {
+            username: username.value,
+            password: password.value
+          }
+        })
 
-      await mutate({
-        options: {
-          username: username.value,
-          password: username.value
+        if (response && response.data) {
+          store.commit('accessToken/set', {
+            token: response.data.registerUser.accessToken
+          })
         }
-      })
-      router.push('/')
+        router.push('/')
+      } catch (e) {
+        console.error(e.message)
+      }
     }
 
     return { username, password, register }

@@ -50,7 +50,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createUsageStats: UsageStats;
   revokeRefreshTokensForUser: User;
-  registerUser: User;
+  registerUser: LoginResponse;
   loginUser: LoginResponse;
   logoutUser?: Maybe<Scalars['Boolean']>;
 };
@@ -318,8 +318,12 @@ export type RegisterUserMutationVariables = Exact<{
 export type RegisterUserMutation = (
   { __typename?: 'Mutation' }
   & { registerUser: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'createdAt'>
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username'>
+    ) }
   ) }
 );
 
@@ -427,9 +431,11 @@ export type LogoutUserMutationCompositionFunctionResult = VueApolloComposable.Us
 export const RegisterUserDocument = gql`
     mutation RegisterUser($options: UserInput!) {
   registerUser(data: $options) {
-    id
-    username
-    createdAt
+    accessToken
+    user {
+      id
+      username
+    }
   }
 }
     `;

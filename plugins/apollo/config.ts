@@ -75,12 +75,12 @@ export default ({ store }) => {
         },
         handleError: (err) => {
           console.warn('Your refresh token was invalid. Try to re-login')
-          console.log(err)
         }
       }),
       onError(({ graphQLErrors, networkError }) => {
-        console.log(graphQLErrors)
-        console.log(networkError)
+        if (networkError) {
+          console.log(networkError)
+        }
       }),
       requestLink,
       new HttpLink({

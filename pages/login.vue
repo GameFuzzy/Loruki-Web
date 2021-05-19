@@ -68,20 +68,24 @@ export default defineComponent({
     const login = async (e: any) => {
       e.preventDefault()
 
-      const response = await mutate({
-        options: {
-          username: username.value,
-          password: username.value
-        }
-      })
-
-      if (response && response.data) {
-        store.commit('accessToken/set', {
-          token: response.data.loginUser.accessToken
+      try {
+        const response = await mutate({
+          options: {
+            username: username.value,
+            password: password.value
+          }
         })
-      }
 
-      router.push('/')
+        if (response && response.data) {
+          store.commit('accessToken/set', {
+            token: response.data.loginUser.accessToken
+          })
+        }
+
+        router.push('/')
+      } catch (e) {
+        console.error(e.message)
+      }
     }
 
     return { username, password, login }

@@ -1,7 +1,9 @@
 mutation RegisterUser($options: UserInput!) {
   registerUser(data: $options) {
-    id
-    username
-    createdAt
+    accessToken
+    user {
+      id
+      username
+    }
   }
 }

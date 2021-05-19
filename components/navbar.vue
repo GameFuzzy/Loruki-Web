@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { defineComponent, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useStore } from '@nuxtjs/composition-api'
 import {
   MeDocument,
   useLogoutUserMutation,
@@ -39,6 +39,7 @@ import { useResult } from '@vue/apollo-composable'
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const store = useStore()
     const { result } = useMeQuery()
     const me = useResult(result, null, (data) => data.me)
@@ -56,6 +57,7 @@ export default defineComponent({
     function logout() {
       mutate()
       store.commit('accessToken/set', { token: '' })
+      router.push('/')
     }
     return { me, logout }
   }
