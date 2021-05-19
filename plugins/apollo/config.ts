@@ -1,4 +1,3 @@
-import { getAccessToken, setAccessToken } from '~/auth'
 import { ApolloLink, Observable } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
@@ -7,7 +6,7 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh'
 import jwtDecode, { JwtPayload } from 'jwt-decode'
 import backendPathBuilder from '~/utilities/backendURIBuilder'
 
-export default () => {
+export default ({ store }) => {
   const cache = new InMemoryCache({})
 
   const requestLink = new ApolloLink(
@@ -15,8 +14,8 @@ export default () => {
       new Observable((observer) => {
         let handle: any
         Promise.resolve(operation)
-          .then((operation) => {
-            const accessToken = getAccessToken()
+          .then(async (operation) => {
+            const accessToken = store.state.accessToken.token
             if (accessToken) {
               operation.setContext({
                 headers: {
@@ -48,7 +47,7 @@ export default () => {
       new TokenRefreshLink({
         accessTokenField: 'accessToken',
         isTokenValidOrUndefined: () => {
-          const token = getAccessToken()
+          const token = store.state.accessToken.token
 
           if (!token) {
             return true
@@ -67,12 +66,12 @@ export default () => {
         },
         fetchAccessToken: () => {
           return fetch(`${backendPathBuilder(false)}/refresh_token`, {
-            method: 'POST',
+            method: 'post',
             credentials: 'include'
           })
         },
         handleFetch: (accessToken) => {
-          setAccessToken(accessToken)
+          store.commit('accessToken/set', { token: accessToken })
         },
         handleError: (err) => {
           console.warn('Your refresh token was invalid. Try to re-login')

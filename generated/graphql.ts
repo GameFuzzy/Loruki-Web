@@ -52,6 +52,7 @@ export type Mutation = {
   revokeRefreshTokensForUser: User;
   registerUser: User;
   loginUser: LoginResponse;
+  logoutUser?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -301,6 +302,14 @@ export type LoginUserMutation = (
   ) }
 );
 
+export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutUserMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logoutUser'>
+);
+
 export type RegisterUserMutationVariables = Exact<{
   options: UserInput;
 }>;
@@ -314,17 +323,6 @@ export type RegisterUserMutation = (
   ) }
 );
 
-export type LastUsageStatsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LastUsageStatsQuery = (
-  { __typename?: 'Query' }
-  & { findFirstUsageStats?: Maybe<(
-    { __typename?: 'UsageStats' }
-    & Pick<UsageStats, 'deployments' | 'published' | 'projects'>
-  )> }
-);
-
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -333,6 +331,17 @@ export type MeQuery = (
   & { me?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
+  )> }
+);
+
+export type LastUsageStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LastUsageStatsQuery = (
+  { __typename?: 'Query' }
+  & { findFirstUsageStats?: Maybe<(
+    { __typename?: 'UsageStats' }
+    & Pick<UsageStats, 'deployments' | 'published' | 'projects'>
   )> }
 );
 
@@ -392,6 +401,29 @@ export function useLoginUserMutation(options: VueApolloComposable.UseMutationOpt
   return VueApolloComposable.useMutation<LoginUserMutation, LoginUserMutationVariables>(LoginUserDocument, options);
 }
 export type LoginUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<LoginUserMutation, LoginUserMutationVariables>;
+export const LogoutUserDocument = gql`
+    mutation LogoutUser {
+  logoutUser
+}
+    `;
+
+/**
+ * __useLogoutUserMutation__
+ *
+ * To run a mutation, you first call `useLogoutUserMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutUserMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useLogoutUserMutation();
+ */
+export function useLogoutUserMutation(options: VueApolloComposable.UseMutationOptions<LogoutUserMutation, LogoutUserMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<LogoutUserMutation, LogoutUserMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<LogoutUserMutation, LogoutUserMutationVariables>(LogoutUserDocument, options);
+}
+export type LogoutUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<LogoutUserMutation, LogoutUserMutationVariables>;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($options: UserInput!) {
   registerUser(data: $options) {
@@ -423,6 +455,31 @@ export function useRegisterUserMutation(options: VueApolloComposable.UseMutation
   return VueApolloComposable.useMutation<RegisterUserMutation, RegisterUserMutationVariables>(RegisterUserDocument, options);
 }
 export type RegisterUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RegisterUserMutation, RegisterUserMutationVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    username
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a Vue component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useMeQuery();
+ */
+export function useMeQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
+}
+export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<MeQuery, MeQueryVariables>;
 export const LastUsageStatsDocument = gql`
     query LastUsageStats {
   findFirstUsageStats(orderBy: {id: desc}) {
@@ -449,28 +506,3 @@ export function useLastUsageStatsQuery(options: VueApolloComposable.UseQueryOpti
   return VueApolloComposable.useQuery<LastUsageStatsQuery, LastUsageStatsQueryVariables>(LastUsageStatsDocument, {}, options);
 }
 export type LastUsageStatsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<LastUsageStatsQuery, LastUsageStatsQueryVariables>;
-export const MeDocument = gql`
-    query Me {
-  me {
-    id
-    username
-  }
-}
-    `;
-
-/**
- * __useMeQuery__
- *
- * To run a query within a Vue component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useMeQuery();
- */
-export function useMeQuery(options: VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<MeQuery, MeQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<MeQuery, MeQueryVariables>(MeDocument, {}, options);
-}
-export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<MeQuery, MeQueryVariables>;

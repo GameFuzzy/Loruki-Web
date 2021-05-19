@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { useResult } from '@vue/apollo-composable/dist'
 import { useByeQuery } from '@/generated/graphql'
 

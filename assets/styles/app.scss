@@ -37,35 +37,16 @@ img {
   width: 100%;
 }
 
-a {
+a, button {
   color: #333;
   text-decoration: none;
 }
-
-.navbar {
-  background-color: var(--clr-secondary-100);
-  color: #fff;
-  height: 70px;
-
-  .flex {
-    justify-content: space-between;
-  }
-
-  ul {
-    display: flex;
-  }
-
-  a {
-    color: #fff;
-    padding: .625em;
-    margin: 0 .3125rem;
-    &.nuxt-link-exact-active {
-      color: #333;
-    }
-    &:hover {
-      border-bottom: 2px white solid;
-    }
-  }
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  font: inherit;
 }
 
 .showcase {

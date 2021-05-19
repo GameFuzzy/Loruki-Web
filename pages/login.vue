@@ -36,15 +36,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ssrRef, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRouter,
+  useStore
+} from '@nuxtjs/composition-api'
 import { useLoginUserMutation, MeDocument } from '~/generated/graphql'
-import { setAccessToken } from '~/auth'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
     const router = useRouter()
-    const username = ssrRef('')
-    const password = ssrRef('')
+    const username = ref('')
+    const password = ref('')
 
     const { mutate } = useLoginUserMutation({
       update: (store, { data }) => {
@@ -71,7 +76,9 @@ export default defineComponent({
       })
 
       if (response && response.data) {
-        setAccessToken(response.data.loginUser.accessToken)
+        store.commit('accessToken/set', {
+          token: response.data.loginUser.accessToken
+        })
       }
 
       router.push('/')

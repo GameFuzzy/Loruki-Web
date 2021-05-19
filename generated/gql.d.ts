@@ -17,6 +17,15 @@ declare module '*/LoginUser.gql' {
 }
     
 
+declare module '*/LogoutUser.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const LogoutUser: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/RegisterUser.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -26,19 +35,19 @@ declare module '*/RegisterUser.gql' {
 }
     
 
-declare module '*/UsageStats.gql' {
+declare module '*/Me.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const LastUsageStats: DocumentNode;
+  export const Me: DocumentNode;
 
   export default defaultDocument;
 }
     
 
-declare module '*/me.gql' {
+declare module '*/UsageStats.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const Me: DocumentNode;
+  export const LastUsageStats: DocumentNode;
 
   export default defaultDocument;
 }

@@ -1,49 +1,35 @@
 <template>
   <div id="app">
-    <!-- Navbar-->
-    <div class="navbar">
-      <div class="container flex">
-        <h1 class="logo">Loruki</h1>
-        <nav>
-          <ul>
-            <li><nuxt-link to="/">Home</nuxt-link></li>
-            <li><nuxt-link to="/features">Features</nuxt-link></li>
-            <li><nuxt-link to="/docs">Docs</nuxt-link></li>
-            <li v-if="me">
-              <nuxt-link to="/profile">Profile</nuxt-link>
-            </li>
-            <li v-if="me">You are logged in as: {{ me.username }}</li>
-            <li v-if="!me">
-              <nuxt-link to="/login">Sign in {{ me }}</nuxt-link>
-            </li>
-            <li v-if="!me">
-              <nuxt-link to="/register">Register</nuxt-link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <div v-if="loading">Loading...</div>
+    <div v-else>
+      <!-- Navbar-->
+      <navbar />
+      <Nuxt />
     </div>
-    <Nuxt />
   </div>
 </template>
 
 <script lang="ts">
-import meQuery from '../graphql/queries/me.gql'
-import refreshAccessTokenMixin from '~/mixins/refreshAccessTokenMixin'
-import refreshAccessTokenMiddleware from '~/middleware/refreshAccessTokenMiddleware'
+import { defineComponent, ref, useStore } from '@nuxtjs/composition-api'
+import backendPathBuilder from '~/utilities/backendURIBuilder'
 
-export default {
-  // The composition API has problems with client-side only fetching
-  apollo: {
-    me: {
-      prefetch: false,
-      fetchPolicy: 'network-only',
-      query: meQuery
+export default defineComponent({
+  setup() {
+    const store = useStore()
+    let loading = ref(true)
+    if (process.client) {
+      fetch(`${backendPathBuilder(false)}/refresh_token`, {
+        method: 'post',
+        credentials: 'include'
+      }).then(async (res) => {
+        const data = await res.json()
+        store.commit('accessToken/set', { token: data.accessToken })
+        loading.value = false
+      })
     }
-  },
-  mixins: [refreshAccessTokenMixin],
-  middleware: [refreshAccessTokenMiddleware]
-}
+    return { loading }
+  }
+})
 </script>
 
 <style lang="scss">
