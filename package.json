@@ -27,7 +27,7 @@
     "nuxt-fontawesome": "^0.4.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.21.4",
+    "@graphql-codegen/cli": "^2.11.8",
     "@graphql-codegen/typescript": "^1.22.0",
     "@graphql-codegen/typescript-graphql-files-modules": "^1.18.1",
     "@graphql-codegen/typescript-operations": "^1.17.16",
